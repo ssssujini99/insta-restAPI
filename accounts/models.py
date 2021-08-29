@@ -16,7 +16,7 @@ def user_path(instance, filename):
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    nickname = models.CharField('별명', max_length=20, unique=True) # unique: 중복
+    nickname = models.CharField('별명', max_length=20, unique=True) # unique=True: 중복x
     picture = ProcessedImageField(upload_to=user_path,
                                   processors=[ResizeToFill(150, 150)],
                                   format='JPEG',
