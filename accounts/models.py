@@ -6,7 +6,7 @@ from imagekit.processors import ResizeToFill
 def user_path(instance, filename):
     from random import choice
     import string
-    arr = [choice(string.ascii_letters) for _ in range()]
+    arr = [choice(string.ascii_letters) for _ in range(8)]
     pid = ''.join(arr)
     extension = filename.split('.')[-1] # 확장자 부분 가져오기
     return 'accouts/{}/{}.{}'.format(instance.user.username, pid, extension)
