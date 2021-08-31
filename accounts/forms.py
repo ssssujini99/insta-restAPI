@@ -17,12 +17,12 @@ class SignupForm(UserCreationForm): # 회원가입 폼
     }))
     
     nickname = forms.CharField(label='닉네임')
-    picture = forms.IntegerField(label='프로필 사진', required=False)
+    picture = forms.ImageField(label='프로필 사진', required=False)
     
     class Meta(UserCreationForm.Meta):
         fields = UserCreationForm.Meta.fields + ('email',)
     
-    def clean_nickname(self): #유효성 검사
+    def clean_nickname(self): #유효성 검사 # 이미 존재하는 닉네임인지 확인
         nickname = self.cleaned_data.get('nickname')
         if Profile.objects.filter(nickname=nickname).exists():
             raise forms.ValidationError('이미 존재하는 닉네임 입니다')
