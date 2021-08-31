@@ -7,7 +7,7 @@ from django.contrib.auth.models import User # 장고에 내장되어 있는 User
 class LoginForm(forms.ModelForm):
     class Meta:
         model = User
-        field = ["username", "password"]
+        fields = '__all__'
 
 
 class SignupForm(UserCreationForm): # 회원가입 폼
