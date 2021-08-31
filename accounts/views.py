@@ -11,11 +11,9 @@ def signup(request): # 회원가입
         if form.is_valid():
             user = form.save()
             return redirect('accounts:login') # accounts의 login으로 redirect하기
-        else:
-            form = SignupForm() 
-        return render(request, 'accounts/signup.html', {
-            'form': form,
-        }) # 다시 회원가입을 요청
+    else: # get 요청일때
+        form = SignupForm()
+    return render(request, 'accounts/signup.html', {'form': form})
 
 
 def login_check(request): # 로그인
