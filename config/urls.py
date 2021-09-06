@@ -22,6 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('allauth.urls')),
+    path('post/', include('post.urls', namespace='post')),
+    path('', lambda r: redirect('post:post_list'), name='root') # 루트로 연결
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
