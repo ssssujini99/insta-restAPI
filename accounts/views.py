@@ -9,6 +9,7 @@ def signup(request): # 회원가입
     if request.method == 'POST':
         form = SignupForm(request.POST, request.FILES)
         if form.is_valid():
+            print(form.cleaned_data)
             user = form.save()
             return redirect('accounts:login') # accounts의 login으로 redirect하기
     else: # get 요청일때
@@ -28,7 +29,7 @@ def login_check(request): # 로그인
             login(request, user) # 장고가 제공하는 기능 login
             return redirect("/")
         else:
-            return render(request, 'accounts/login_fail_info.html')
+            return render(request, 'accounts/login_fail.html')
     else: ## request.method != "GET"
         form = LoginForm() # 다시 로그인 시도
         return render(request, 'accounts/login.html', {"form": form})
