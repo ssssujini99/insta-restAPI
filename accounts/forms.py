@@ -4,10 +4,10 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 from django.contrib.auth.models import User # 장고에 내장되어 있는 User
 
-class LoginForm(forms.ModelForm):
+class LoginForm(forms.ModelForm): # 로그인 폼
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['username', 'password']
 
 
 class SignupForm(UserCreationForm): # 회원가입 폼
@@ -44,7 +44,7 @@ class SignupForm(UserCreationForm): # 회원가입 폼
     def save(self):
         user = super().save()
         Profile.objects.create(
-            user = user,
+            user = user, # username, password
             nickname = self.cleaned_data['nickname'],
             picture = self.cleaned_data['picture']
         )
