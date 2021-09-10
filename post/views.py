@@ -58,7 +58,7 @@ def post_edit(request, pk):
             post = form.save()
             #post.tag_set.clear()
             #post.tag_save()
-            messages.success(request, '수정완료')
+            #messages.success(request, '수정완료')
             return redirect('post:post_list')
     else: # get방식일때
         form = PostForm(instance=post)
@@ -72,10 +72,10 @@ def post_edit(request, pk):
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if post.author != request.user or request.method == 'GET':
-        messages.warning(request, '잘못된 접근입니다.')
+        #messages.warning(request, '잘못된 접근입니다.')
         return redirect('post:post_list')
     
     if request.method == 'POST':
         post.delete()
-        messages.success(request, '삭제완료')
+        #messages.success(request, '삭제완료')
         return redirect('post:post_list')
