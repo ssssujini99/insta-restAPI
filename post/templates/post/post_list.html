@@ -26,8 +26,15 @@
                                 {% endif %}
                             </div>
                             <div class="user_name">
-                                <div class="nick_name m_text">{{ post.author.profile.nickname }}</div>
+                                <div class="nick_name m_text">{{ post.author.profile.nickname }} {{ post.id }}</div>
                                 <div class="country s_text">Seoul, South Korea</div>
+                            </div>
+                            
+                            <div>
+                                <form action="{% url 'post:post_delete' post.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" value="삭제">
+                                </form>
                             </div>
 
                         </div>
