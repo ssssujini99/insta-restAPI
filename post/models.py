@@ -80,3 +80,20 @@ class Bookmark(models.Model):
         unique_together = (
             ('user', 'post')
         )
+        
+        
+
+# 댓글 모델 구현
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE) # comment에 해당하는 post
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # comment의 작성자
+    content = models.CharField(max_length=40)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-id']
+        
+    def __str__(self):
+        return self.content
+    
