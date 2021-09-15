@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 import json
 from django.http import HttpResponse
-from .models import Post
+from .models import Post, Like, Comment
 from .forms import PostForm
 
 
@@ -121,3 +121,47 @@ def post_delete(request, pk):
         #messages.success(request, '삭제완료')
         return redirect('post:post_list')
     
+    
+
+
+@login_required
+def comment_new(request): # ajax로 댓글을 추가할 때 처리하기
+    pk = request.POST.get('pk')
+    post = get_object_or_404(Post, pk=pk) # pk로 댓글에 대한 Post 찾기
+    if request.method == 'POST': # ajax에서 전달한 요청이 post일때
+        form = CommentForm(request.POST) # 사용자가 작성한 댓글폼을 post로 가져옴
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.post = post
+            comment.save()
+            return render(request, 'post/comment_new_ajax.html', {
+                'comment': comment,
+            })
+    return redirect("post:post_list")
+
+
+@login_required
+def comment_delete(request): # ajax로 댓글에 대한 삭제 요청이 들어왔을 때 처리하기
+    pk = request.POST.get('pk')
+    comment = get_object_or_404(Comment, pk=pk) # 해당 삭제할 댓글을 가져오기
+    if request.method == 'POST' and request.user == comment.author:
+        comment.delete()
+        message = '삭제완료'
+        status = 1
+    else:
+        message = '잘못된 접근입니다'
+        status = 0
+    
+    return HttpResponse(json.dumps({'message': message, 'status': status, }), content_type="application/json")
+
+
+        
+    
+
+
+
+
+
+
+
